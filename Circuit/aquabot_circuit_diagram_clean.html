@@ -1,0 +1,867 @@
+<style>
+  .bg-paper {
+    fill: #FAF8F3;
+  }
+
+  .pcb-esp {
+    fill: #1B5E20;
+    stroke: #0D3B0D;
+  }
+
+  .pcb-l298 {
+    fill: #B71C1C;
+    stroke: #7F0000;
+  }
+
+  .sensor-body {
+    fill: #37474F;
+    stroke: #263238;
+  }
+
+  .ir-body {
+    fill: #1A237E;
+    stroke: #0D1259;
+  }
+
+  .battery-body {
+    fill: #E65100;
+    stroke: #BF360C;
+  }
+
+  .buck-body {
+    fill: #00695C;
+    stroke: #004D40;
+  }
+
+  .pin-pad {
+    fill: #D4A045;
+    stroke: #8B6914;
+  }
+
+  .label-box {
+    fill: rgba(255, 255, 255, 0.92);
+    stroke: #D0CCC0;
+  }
+
+  .title-main {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    fill: #2C2C2A;
+  }
+
+  .title-sub {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: #5F5E5A;
+  }
+
+  .section-hdr {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    fill: #2C2C2A;
+  }
+
+  .comp-name {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    fill: #2C2C2A;
+  }
+
+  .pin-txt {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: #FFFFFF;
+  }
+
+  .pin-txt-dark {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: #2C2C2A;
+  }
+
+  .gpio-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+  }
+
+  .legend-txt {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    fill: #444441;
+  }
+
+  .wire-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: #2C2C2A;
+  }
+</style>
+<svg width="100%" viewBox="0 0 1000 1500" xmlns="http://www.w3.org/2000/svg">
+  <!-- <title>AquaBot ESP32 circuit diagram, schematic layout</title> -->
+  <!-- <desc>Clean schematic showing every wire connection between ESP32 and all peripherals: ultrasonic sensors, IR sensors,
+    L298N, servo, buzzer, with explicit ground returns and power distribution.</desc> -->
+
+  <defs>
+    <pattern id="paper-grid" width="25" height="25" patternUnits="userSpaceOnUse">
+      <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#E5E1D5" stroke-width="0.4" />
+    </pattern>
+  </defs>
+
+  <!-- Light paper background -->
+  <rect width="1000" height="1500" fill="#FAF8F3" />
+  <rect width="1000" height="1500" fill="url(#paper-grid)" />
+
+  <!-- Title block -->
+  <!-- <rect x="40" y="30" width="920" height="56" rx="6" fill="#FFFFFF" stroke="#D0CCC0" stroke-width="0.8" />
+  <text class="title-main" x="60" y="58">AquaBot ESP32 IIoT — circuit schematic</text>
+  <text class="title-sub" x="60" y="76">Water surface cleaning robot · v1.1 · all GPIO and ground connections
+    shown</text>
+  <text class="title-sub" x="940" y="58" text-anchor="end" font-weight="500">DRAWING-01</text>
+  <text class="title-sub" x="940" y="76" text-anchor="end">Sheet 1 of 1</text> -->
+
+  <!-- ============================================================ -->
+  <!-- LEFT COLUMN: ULTRASONIC SENSORS -->
+  <!-- ============================================================ -->
+  <text class="section-hdr" x="60" y="115">Ultrasonic sensors (HC-SR04)</text>
+  <line x1="60" y1="122" x2="240" y2="122" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <!-- FRONT sensor -->
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="180" height="80" rx="6" class="sensor-body" stroke-width="1" />
+    <circle cx="50" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="50" cy="40" r="14" fill="#37474F" />
+    <circle cx="130" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="130" cy="40" r="14" fill="#37474F" />
+    <text x="90" y="76" text-anchor="middle" class="pin-txt" font-size="8">HC-SR04 FRONT</text>
+    <!-- pin row top -->
+    <rect x="20" y="-10" width="140" height="10" fill="#1A2227" />
+    <circle cx="35" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="70" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="110" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="145" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="35" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="70" y="-15" text-anchor="middle" class="pin-txt-dark">TRIG</text>
+    <text x="110" y="-15" text-anchor="middle" class="pin-txt-dark">ECHO</text>
+    <text x="145" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- LEFT sensor -->
+  <g transform="translate(60, 270)">
+    <rect x="0" y="0" width="180" height="80" rx="6" class="sensor-body" stroke-width="1" />
+    <circle cx="50" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="50" cy="40" r="14" fill="#37474F" />
+    <circle cx="130" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="130" cy="40" r="14" fill="#37474F" />
+    <text x="90" y="76" text-anchor="middle" class="pin-txt" font-size="8">HC-SR04 LEFT</text>
+    <rect x="20" y="-10" width="140" height="10" fill="#1A2227" />
+    <circle cx="35" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="70" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="110" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="145" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="35" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="70" y="-15" text-anchor="middle" class="pin-txt-dark">TRIG</text>
+    <text x="110" y="-15" text-anchor="middle" class="pin-txt-dark">ECHO</text>
+    <text x="145" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- RIGHT sensor -->
+  <g transform="translate(60, 400)">
+    <rect x="0" y="0" width="180" height="80" rx="6" class="sensor-body" stroke-width="1" />
+    <circle cx="50" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="50" cy="40" r="14" fill="#37474F" />
+    <circle cx="130" cy="40" r="20" fill="#546E7A" stroke="#78909C" stroke-width="1" />
+    <circle cx="130" cy="40" r="14" fill="#37474F" />
+    <text x="90" y="76" text-anchor="middle" class="pin-txt" font-size="8">HC-SR04 RIGHT</text>
+    <rect x="20" y="-10" width="140" height="10" fill="#1A2227" />
+    <circle cx="35" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="70" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="110" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="145" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="35" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="70" y="-15" text-anchor="middle" class="pin-txt-dark">TRIG</text>
+    <text x="110" y="-15" text-anchor="middle" class="pin-txt-dark">ECHO</text>
+    <text x="145" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- IR Sensors -->
+  <text class="section-hdr" x="60" y="540">IR proximity sensors</text>
+  <line x1="60" y1="547" x2="220" y2="547" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <!-- IR1 -->
+  <g transform="translate(60, 565)">
+    <rect x="0" y="0" width="180" height="60" rx="6" class="ir-body" stroke-width="1" />
+    <circle cx="40" cy="30" r="10" fill="#E91E63" opacity="0.8" />
+    <circle cx="80" cy="30" r="10" fill="#212121" stroke="#424242" stroke-width="0.5" />
+    <text x="135" y="34" text-anchor="middle" class="pin-txt" font-size="9">IR 1 LEFT</text>
+    <rect x="20" y="-10" width="140" height="10" fill="#0D1259" />
+    <circle cx="50" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="90" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="130" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="50" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="90" y="-15" text-anchor="middle" class="pin-txt-dark">OUT</text>
+    <text x="130" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- IR2 -->
+  <g transform="translate(60, 660)">
+    <rect x="0" y="0" width="180" height="60" rx="6" class="ir-body" stroke-width="1" />
+    <circle cx="40" cy="30" r="10" fill="#E91E63" opacity="0.8" />
+    <circle cx="80" cy="30" r="10" fill="#212121" stroke="#424242" stroke-width="0.5" />
+    <text x="135" y="34" text-anchor="middle" class="pin-txt" font-size="9">IR 2 CENTER</text>
+    <rect x="20" y="-10" width="140" height="10" fill="#0D1259" />
+    <circle cx="50" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="90" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="130" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="50" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="90" y="-15" text-anchor="middle" class="pin-txt-dark">OUT</text>
+    <text x="130" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- IR3 -->
+  <g transform="translate(60, 755)">
+    <rect x="0" y="0" width="180" height="60" rx="6" class="ir-body" stroke-width="1" />
+    <circle cx="40" cy="30" r="10" fill="#E91E63" opacity="0.8" />
+    <circle cx="80" cy="30" r="10" fill="#212121" stroke="#424242" stroke-width="0.5" />
+    <text x="135" y="34" text-anchor="middle" class="pin-txt" font-size="9">IR 3 RIGHT</text>
+    <rect x="20" y="-10" width="140" height="10" fill="#0D1259" />
+    <circle cx="50" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="90" cy="-5" r="2.5" fill="#D4A045" />
+    <circle cx="130" cy="-5" r="2.5" fill="#D4A045" />
+    <text x="50" y="-15" text-anchor="middle" class="pin-txt-dark">VCC</text>
+    <text x="90" y="-15" text-anchor="middle" class="pin-txt-dark">OUT</text>
+    <text x="130" y="-15" text-anchor="middle" class="pin-txt-dark">GND</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- CENTER: ESP32 -->
+  <!-- ============================================================ -->
+  <text class="section-hdr" x="500" y="115" text-anchor="middle">ESP32 WROOM-32 (microcontroller)</text>
+  <line x1="380" y1="122" x2="620" y2="122" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <g transform="translate(380, 140)">
+    <!-- Board -->
+    <rect x="0" y="0" width="240" height="500" rx="8" class="pcb-esp" stroke-width="1.5" />
+    <!-- Antenna -->
+    <rect x="80" y="0" width="80" height="40" rx="3" fill="#2E7D32" stroke="#1B5E20" stroke-width="0.8" />
+    <text x="120" y="25" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">WiFi/BT</text>
+    <!-- Chip -->
+    <rect x="80" y="200" width="80" height="80" rx="4" fill="#1A1A1A" stroke="#333" />
+    <text x="120" y="232" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+      fill="#A5D6A7">ESP32</text>
+    <text x="120" y="248" text-anchor="middle" font-family="var(--font-mono)" font-size="8"
+      fill="#81C784">WROOM-32</text>
+    <text x="120" y="262" text-anchor="middle" font-family="var(--font-mono)" font-size="7" fill="#66BB6A">240
+      MHz</text>
+    <!-- USB-C -->
+    <rect x="90" y="478" width="60" height="22" rx="3" fill="#444" stroke="#222" stroke-width="0.8" />
+    <text x="120" y="494" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#BBB">USB-C</text>
+    <!-- LED -->
+    <circle cx="170" y="100" r="3" fill="#F44336" />
+    <text x="180" y="103" font-family="var(--font-mono)" font-size="7" fill="#A5D6A7">PWR</text>
+
+    <!-- LEFT pin column with pads -->
+    <!-- Each pin: pad outside board edge, label inside green area -->
+    <g>
+      <!-- 3V3 -->
+      <rect x="-10" y="80" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="87" font-family="var(--font-mono)" font-size="9" fill="#FFE082">3V3</text>
+      <!-- GND top -->
+      <rect x="-10" y="100" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="107" font-family="var(--font-mono)" font-size="9" fill="#EF9A9A">GND</text>
+      <!-- GPIO 15 -->
+      <rect x="-10" y="120" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="127" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 15</text>
+      <!-- GPIO 2 -->
+      <rect x="-10" y="140" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="147" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 2</text>
+      <!-- GPIO 4 -->
+      <rect x="-10" y="160" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="167" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 4</text>
+      <!-- GPIO 16 -->
+      <rect x="-10" y="180" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="187" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 16</text>
+      <!-- GPIO 17 -->
+      <rect x="-10" y="200" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="207" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 17</text>
+      <!-- GPIO 5 -->
+      <rect x="-10" y="220" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="227" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 5</text>
+      <!-- GPIO 18 -->
+      <rect x="-10" y="240" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="247" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 18</text>
+      <!-- GPIO 19 -->
+      <rect x="-10" y="260" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="267" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">GPIO 19</text>
+      <!-- GPIO 21 -->
+      <rect x="-10" y="280" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="287" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 21</text>
+      <!-- RX -->
+      <rect x="-10" y="300" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="307" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">RX</text>
+      <!-- TX -->
+      <rect x="-10" y="320" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="327" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">TX</text>
+      <!-- GPIO 22 -->
+      <rect x="-10" y="340" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="347" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 22</text>
+      <!-- GPIO 23 -->
+      <rect x="-10" y="360" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="367" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">GPIO 23</text>
+      <!-- GND mid -->
+      <rect x="-10" y="380" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="387" font-family="var(--font-mono)" font-size="9" fill="#EF9A9A">GND</text>
+      <!-- GPIO 13 -->
+      <rect x="-10" y="400" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="407" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 13</text>
+      <!-- GPIO 34 -->
+      <rect x="-10" y="420" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="427" font-family="var(--font-mono)" font-size="9" fill="#FFAB91">GPIO 34</text>
+      <!-- GPIO 35 -->
+      <rect x="-10" y="440" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="447" font-family="var(--font-mono)" font-size="9" fill="#FFAB91">GPIO 35</text>
+    </g>
+
+    <!-- RIGHT pin column -->
+    <g>
+      <!-- VIN -->
+      <rect x="236" y="80" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="87" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#FFAB91">VIN 5V</text>
+      <!-- GND -->
+      <rect x="236" y="100" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="107" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#EF9A9A">GND</text>
+      <!-- GPIO 36 -->
+      <rect x="236" y="120" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="127" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">GPIO 36</text>
+      <!-- GPIO 39 -->
+      <rect x="236" y="140" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="147" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">GPIO 39</text>
+      <!-- GPIO 32 -->
+      <rect x="236" y="160" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="167" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 32</text>
+      <!-- GPIO 33 -->
+      <rect x="236" y="180" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="187" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 33</text>
+      <!-- GPIO 25 -->
+      <rect x="236" y="200" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="207" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 25</text>
+      <!-- GPIO 26 -->
+      <rect x="236" y="220" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="227" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 26</text>
+      <!-- GPIO 27 -->
+      <rect x="236" y="240" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="247" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 27</text>
+      <!-- GPIO 14 -->
+      <rect x="236" y="260" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="267" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#90CAF9">GPIO 14</text>
+      <!-- GPIO 12 -->
+      <rect x="236" y="280" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="287" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#A5D6A7">GPIO 12</text>
+      <!-- GND right -->
+      <rect x="236" y="300" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="307" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#EF9A9A">GND</text>
+      <!-- 3V3 -->
+      <rect x="236" y="320" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="230" y="327" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="#FFE082">3V3</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT COLUMN: L298N + ACTUATORS -->
+  <!-- ============================================================ -->
+  <text class="section-hdr" x="940" y="115" text-anchor="end">L298N motor driver</text>
+  <line x1="760" y1="122" x2="940" y2="122" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <!-- L298N -->
+  <g transform="translate(760, 140)">
+    <rect x="0" y="0" width="200" height="280" rx="6" class="pcb-l298" stroke-width="1.5" />
+    <!-- Heatsink -->
+    <rect x="55" y="40" width="90" height="80" rx="3" fill="#2A2A2A" stroke="#444" stroke-width="0.8" />
+    <line x1="65" y1="40" x2="65" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <line x1="80" y1="40" x2="80" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <line x1="95" y1="40" x2="95" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <line x1="110" y1="40" x2="110" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <line x1="125" y1="40" x2="125" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <line x1="135" y1="40" x2="135" y2="120" stroke="#3A3A3A" stroke-width="0.6" />
+    <text x="100" y="80" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+      fill="#BBB">L298N</text>
+    <text x="100" y="96" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#999">DUAL
+      H-BRIDGE</text>
+
+    <!-- Motor A terminals (top left) -->
+    <rect x="15" y="-12" width="60" height="14" rx="2" fill="#0D47A1" stroke="#08306B" stroke-width="0.5" />
+    <circle cx="30" cy="-5" r="3" fill="#D4A045" />
+    <circle cx="60" cy="-5" r="3" fill="#D4A045" />
+    <text x="45" y="-22" text-anchor="middle" class="pin-txt-dark" font-weight="500">MOTOR A</text>
+    <!-- Motor B terminals (top right) -->
+    <rect x="125" y="-12" width="60" height="14" rx="2" fill="#0D47A1" stroke="#08306B" stroke-width="0.5" />
+    <circle cx="140" cy="-5" r="3" fill="#D4A045" />
+    <circle cx="170" cy="-5" r="3" fill="#D4A045" />
+    <text x="155" y="-22" text-anchor="middle" class="pin-txt-dark" font-weight="500">MOTOR B</text>
+
+    <!-- Power input (bottom) -->
+    <rect x="20" y="270" width="14" height="14" rx="2" fill="#0D47A1" stroke="#08306B" stroke-width="0.5" />
+    <text x="27" y="298" text-anchor="middle" class="pin-txt-dark">12V</text>
+    <rect x="50" y="270" width="14" height="14" rx="2" fill="#0D47A1" stroke="#08306B" stroke-width="0.5" />
+    <text x="57" y="298" text-anchor="middle" class="pin-txt-dark">GND</text>
+    <rect x="80" y="270" width="14" height="14" rx="2" fill="#0D47A1" stroke="#08306B" stroke-width="0.5" />
+    <text x="87" y="298" text-anchor="middle" class="pin-txt-dark">5V</text>
+
+    <!-- Control pins (left) - inputs from ESP32 -->
+    <g>
+      <rect x="-10" y="140" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="147" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">ENA</text>
+      <rect x="-10" y="160" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="167" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">IN1</text>
+      <rect x="-10" y="180" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="187" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">IN2</text>
+      <rect x="-10" y="210" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="217" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">IN3</text>
+      <rect x="-10" y="230" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="237" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">IN4</text>
+      <rect x="-10" y="250" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+      <text x="10" y="257" font-family="var(--font-mono)" font-size="9" fill="#FFCDD2">ENB</text>
+    </g>
+  </g>
+
+  <!-- DC Motors (top of L298N) -->
+  <g transform="translate(760, 50)">
+    <rect x="0" y="0" width="80" height="40" rx="20" fill="#455A64" stroke="#263238" stroke-width="1" />
+    <circle cx="20" cy="20" r="12" fill="#37474F" stroke="#546E7A" stroke-width="0.5" />
+    <line x1="20" y1="14" x2="20" y2="26" stroke="#90A4AE" stroke-width="1" />
+    <text x="55" y="24" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#CFD8DC">DC M1</text>
+    <text x="40" y="-5" text-anchor="middle" class="comp-name">Propulsion motor</text>
+  </g>
+  <g transform="translate(870, 50)">
+    <rect x="0" y="0" width="80" height="40" rx="20" fill="#455A64" stroke="#263238" stroke-width="1" />
+    <circle cx="20" cy="20" r="12" fill="#37474F" stroke="#546E7A" stroke-width="0.5" />
+    <line x1="20" y1="14" x2="20" y2="26" stroke="#90A4AE" stroke-width="1" />
+    <text x="55" y="24" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#CFD8DC">DC M2</text>
+    <text x="40" y="-5" text-anchor="middle" class="comp-name">Conveyor motor</text>
+  </g>
+
+  <!-- Motor A wires to DC M1 -->
+  <line x1="790" y1="128" x2="790" y2="90" stroke="#FFB300" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="820" y1="128" x2="820" y2="90" stroke="#212121" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Motor B wires to DC M2 -->
+  <line x1="900" y1="128" x2="900" y2="90" stroke="#FFB300" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="930" y1="128" x2="930" y2="90" stroke="#212121" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Servo (right side, below L298N) -->
+  <text class="section-hdr" x="940" y="455" text-anchor="end">Steering servo</text>
+  <line x1="800" y1="462" x2="940" y2="462" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <g transform="translate(800, 480)">
+    <rect x="0" y="0" width="140" height="70" rx="5" fill="#1565C0" stroke="#0D47A1" stroke-width="1" />
+    <rect x="100" y="-12" width="28" height="28" rx="14" fill="#1976D2" stroke="#0D47A1" stroke-width="0.5" />
+    <circle cx="114" cy="2" r="4" fill="#0D47A1" />
+    <circle cx="114" cy="35" r="9" fill="#1976D2" stroke="#0D47A1" stroke-width="0.5" />
+    <text x="50" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+      fill="#BBDEFB">SG90</text>
+    <text x="50" y="54" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#90CAF9">SERVO</text>
+    <!-- Wire pads -->
+    <rect x="15" y="70" width="10" height="14" rx="1" fill="#FF9800" />
+    <rect x="35" y="70" width="10" height="14" rx="1" fill="#F44336" />
+    <rect x="55" y="70" width="10" height="14" rx="1" fill="#212121" />
+    <text x="20" y="98" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#FF9800">SIG</text>
+    <text x="40" y="98" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#F44336">VCC</text>
+    <text x="60" y="98" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#212121">GND</text>
+  </g>
+
+  <!-- Buzzer -->
+  <text class="section-hdr" x="940" y="600" text-anchor="end">Active buzzer</text>
+  <line x1="820" y1="607" x2="940" y2="607" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <g transform="translate(810, 625)">
+    <circle cx="65" cy="40" r="35" fill="#1A1A1A" stroke="#000" stroke-width="1.5" />
+    <circle cx="65" cy="40" r="26" fill="#2A2A2A" stroke="#444" stroke-width="0.5" />
+    <circle cx="65" cy="40" r="10" fill="#3A3A3A" stroke="#555" stroke-width="0.5" />
+    <text x="65" y="44" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#AAA">BUZZ</text>
+    <!-- Pins -->
+    <line x1="55" y1="75" x2="55" y2="92" stroke="#D4A045" stroke-width="2.5" />
+    <line x1="75" y1="75" x2="75" y2="92" stroke="#D4A045" stroke-width="2.5" />
+    <text x="55" y="105" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#F44336">SIG</text>
+    <text x="75" y="105" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#212121">GND</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- WIRES — SIGNAL LINES (clean orthogonal routing) -->
+  <!-- ============================================================ -->
+
+  <!-- Naming: ESP32 left pads at x=380 -->
+  <!-- Sensor pin coords: VCC=95(60+35), TRIG=130, ECHO=170, GND=205 (sensor pin row at y = sensor_y - 5) -->
+
+  <!-- ─── FRONT ULTRASONIC ─── -->
+  <!-- Front TRIG (x=130, y=135) → GPIO 5 (380, 224) -->
+  <path d="M 130 135 L 130 130 L 280 130 L 280 224 L 380 224" fill="none" stroke="#1976D2" stroke-width="1.8" />
+  <rect x="195" y="120" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#1976D2" stroke-width="0.5" />
+  <text x="225" y="130" text-anchor="middle" class="wire-tag" fill="#1976D2">GPIO 5</text>
+
+  <!-- Front ECHO (x=170, y=135) → GPIO 18 (380, 244) -->
+  <path d="M 170 135 L 170 116 L 295 116 L 295 244 L 380 244" fill="none" stroke="#F9A825" stroke-width="1.8" />
+  <rect x="220" y="106" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#F9A825" stroke-width="0.5" />
+  <text x="250" y="116" text-anchor="middle" class="wire-tag" fill="#B8860B">GPIO 18</text>
+
+  <!-- ─── LEFT ULTRASONIC ─── -->
+  <!-- Left TRIG (x=130, y=265) → GPIO 16 (380, 184) -->
+  <path d="M 130 265 L 130 250 L 310 250 L 310 184 L 380 184" fill="none" stroke="#1976D2" stroke-width="1.8" />
+  <rect x="190" y="240" width="68" height="14" rx="3" fill="#FFFFFF" stroke="#1976D2" stroke-width="0.5" />
+  <text x="224" y="250" text-anchor="middle" class="wire-tag" fill="#1976D2">GPIO 16</text>
+
+  <!-- Left ECHO (x=170, y=265) → GPIO 17 (380, 204) -->
+  <path d="M 170 265 L 170 235 L 325 235 L 325 204 L 380 204" fill="none" stroke="#F9A825" stroke-width="1.8" />
+  <rect x="220" y="225" width="68" height="14" rx="3" fill="#FFFFFF" stroke="#F9A825" stroke-width="0.5" />
+  <text x="254" y="235" text-anchor="middle" class="wire-tag" fill="#B8860B">GPIO 17</text>
+
+  <!-- ─── RIGHT ULTRASONIC ─── -->
+  <!-- Right TRIG (x=130, y=395) → GPIO 4 (380, 164) -->
+  <path d="M 130 395 L 130 365 L 340 365 L 340 164 L 380 164" fill="none" stroke="#1976D2" stroke-width="1.8" />
+  <rect x="190" y="355" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#1976D2" stroke-width="0.5" />
+  <text x="220" y="365" text-anchor="middle" class="wire-tag" fill="#1976D2">GPIO 4</text>
+
+  <!-- Right ECHO (x=170, y=395) → GPIO 2 (380, 144) -->
+  <path d="M 170 395 L 170 380 L 355 380 L 355 144 L 380 144" fill="none" stroke="#F9A825" stroke-width="1.8" />
+  <rect x="220" y="370" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#F9A825" stroke-width="0.5" />
+  <text x="250" y="380" text-anchor="middle" class="wire-tag" fill="#B8860B">GPIO 2</text>
+
+  <!-- ─── IR SENSORS ─── -->
+  <!-- IR1 OUT (x=150, y=560) → GPIO 34 (380, 424) -->
+  <path d="M 150 560 L 150 545 L 270 545 L 270 424 L 380 424" fill="none" stroke="#E64A19" stroke-width="1.8" />
+  <rect x="190" y="535" width="68" height="14" rx="3" fill="#FFFFFF" stroke="#E64A19" stroke-width="0.5" />
+  <text x="224" y="545" text-anchor="middle" class="wire-tag" fill="#E64A19">GPIO 34</text>
+
+  <!-- IR2 OUT (x=150, y=655) → GPIO 35 (380, 444) -->
+  <path d="M 150 655 L 150 640 L 285 640 L 285 444 L 380 444" fill="none" stroke="#E64A19" stroke-width="1.8" />
+  <rect x="190" y="630" width="68" height="14" rx="3" fill="#FFFFFF" stroke="#E64A19" stroke-width="0.5" />
+  <text x="224" y="640" text-anchor="middle" class="wire-tag" fill="#E64A19">GPIO 35</text>
+
+  <!-- IR3 OUT (x=150, y=750) → GPIO 21 (380, 284) -->
+  <path d="M 150 750 L 150 735 L 300 735 L 300 284 L 380 284" fill="none" stroke="#E64A19" stroke-width="1.8" />
+  <rect x="190" y="725" width="68" height="14" rx="3" fill="#FFFFFF" stroke="#E64A19" stroke-width="0.5" />
+  <text x="224" y="735" text-anchor="middle" class="wire-tag" fill="#E64A19">GPIO 21</text>
+
+  <!-- ─── L298N CONTROL LINES ─── -->
+  <!-- ESP32 right pads at x=620 -->
+  <!-- L298N pads at x=750 -->
+
+  <!-- GPIO 26 → ENA (620, 224 → 750, 144) -->
+  <path d="M 620 224 L 690 224 L 690 144 L 750 144" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="670" y="178" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="700" y="188" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 26</text>
+
+  <!-- GPIO 27 → IN1 (620, 244 → 750, 164) -->
+  <path d="M 620 244 L 680 244 L 680 164 L 750 164" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="660" y="198" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="690" y="208" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 27</text>
+
+  <!-- GPIO 14 → IN2 (620, 264 → 750, 184) -->
+  <path d="M 620 264 L 670 264 L 670 184 L 750 184" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="650" y="218" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="680" y="228" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 14</text>
+
+  <!-- GPIO 33 → IN3 (620, 184 → 750, 214) -->
+  <path d="M 620 184 L 660 184 L 660 214 L 750 214" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="660" y="195" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="690" y="205" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 33</text>
+
+  <!-- GPIO 32 → IN4 (620, 164 → 750, 234) -->
+  <path d="M 620 164 L 645 164 L 645 234 L 750 234" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="615" y="172" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="645" y="182" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 32</text>
+
+  <!-- GPIO 25 → ENB (620, 204 → 750, 254) -->
+  <path d="M 620 204 L 635 204 L 635 254 L 750 254" fill="none" stroke="#7B1FA2" stroke-width="1.8" />
+  <rect x="600" y="212" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#7B1FA2" stroke-width="0.5" />
+  <text x="630" y="222" text-anchor="middle" class="wire-tag" fill="#7B1FA2">GPIO 25</text>
+
+  <!-- ─── SERVO ─── -->
+  <!-- GPIO 13 → Servo SIG (620, 404 → 820, 550) -->
+  <path d="M 620 404 L 720 404 L 720 510 L 820 510" fill="none" stroke="#FB8C00" stroke-width="1.8" />
+  <rect x="690" y="396" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#FB8C00" stroke-width="0.5" />
+  <text x="720" y="406" text-anchor="middle" class="wire-tag" fill="#E65100">GPIO 13</text>
+  <!-- Servo VCC → 5V (rail-derived, shown with red wire) -->
+  <!-- Servo SIG marker -->
+  <line x1="820" y1="510" x2="820" y2="558" stroke="#FB8C00" stroke-width="1.8" />
+  <line x1="820" y1="558" x2="820" y2="554" stroke="#FB8C00" stroke-width="1.8" />
+
+  <!-- ─── BUZZER ─── -->
+  <!-- GPIO 22 → Buzzer SIG (620, 344 → 865, 717) -->
+  <path d="M 620 344 L 700 344 L 700 700 L 865 700 L 865 717" fill="none" stroke="#AD1457" stroke-width="1.8" />
+  <rect x="700" y="336" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#AD1457" stroke-width="0.5" />
+  <text x="730" y="346" text-anchor="middle" class="wire-tag" fill="#AD1457">GPIO 22</text>
+
+  <!-- ============================================================ -->
+  <!-- POWER SUPPLY -->
+  <!-- ============================================================ -->
+  <text class="section-hdr" x="500" y="900" text-anchor="middle">Power supply &amp; ground distribution</text>
+  <line x1="350" y1="907" x2="650" y2="907" stroke="#D0CCC0" stroke-width="0.5" />
+
+  <!-- Battery -->
+  <g transform="translate(80, 940)">
+    <rect x="0" y="0" width="180" height="100" rx="8" class="battery-body" stroke-width="1.5" />
+    <text x="90" y="34" text-anchor="middle" font-family="var(--font-mono)" font-size="14" font-weight="500"
+      fill="#FFF3E0">12V LiPo</text>
+    <text x="90" y="54" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="#FFE0B2">3S 2200
+      mAh</text>
+    <text x="90" y="72" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#FFCC80">11.1 V
+      nominal</text>
+    <!-- Terminals -->
+    <rect x="40" y="100" width="20" height="14" rx="2" fill="#D32F2F" stroke="#7F0000" stroke-width="0.5" />
+    <text x="50" y="128" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="500"
+      fill="#D32F2F">+ 12V</text>
+    <rect x="120" y="100" width="20" height="14" rx="2" fill="#212121" stroke="#000" stroke-width="0.5" />
+    <text x="130" y="128" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="500"
+      fill="#212121">− GND</text>
+  </g>
+
+  <!-- Buck Converter -->
+  <g transform="translate(380, 940)">
+    <rect x="0" y="0" width="180" height="100" rx="8" class="buck-body" stroke-width="1.5" />
+    <circle cx="50" cy="40" r="18" fill="none" stroke="#80CBC4" stroke-width="2" />
+    <path d="M 35 40 Q 42 30 50 40 Q 58 50 65 40" fill="none" stroke="#80CBC4" stroke-width="1.5" />
+    <text x="120" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+      fill="#B2DFDB">Buck</text>
+    <text x="120" y="54" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+      fill="#B2DFDB">Converter</text>
+    <text x="90" y="80" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="#80CBC4">12V → 5V ·
+      3A</text>
+    <!-- IN -->
+    <rect x="-10" y="40" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+    <text x="-15" y="46" text-anchor="end" font-family="var(--font-mono)" font-size="8" fill="#212121">IN+</text>
+    <rect x="-10" y="55" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+    <text x="-15" y="61" text-anchor="end" font-family="var(--font-mono)" font-size="8" fill="#212121">IN−</text>
+    <!-- OUT -->
+    <rect x="176" y="40" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+    <text x="195" y="46" font-family="var(--font-mono)" font-size="8" fill="#212121">OUT+</text>
+    <rect x="176" y="55" width="14" height="8" rx="1" class="pin-pad" stroke-width="0.4" />
+    <text x="195" y="61" font-family="var(--font-mono)" font-size="8" fill="#212121">OUT−</text>
+  </g>
+
+  <!-- Voltage divider for ECHO lines -->
+  <g transform="translate(680, 940)">
+    <rect x="0" y="0" width="240" height="100" rx="8" fill="#FFFFFF" stroke="#B0AEA4" stroke-width="0.8"
+      stroke-dasharray="4 2" />
+    <text x="120" y="20" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="500"
+      fill="#444441">Voltage divider</text>
+    <text x="120" y="34" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#666460">(required on
+      each ECHO line)</text>
+
+    <!-- 5V input -->
+    <line x1="20" y1="55" x2="50" y2="55" stroke="#D32F2F" stroke-width="2" />
+    <text x="15" y="58" text-anchor="end" font-family="var(--font-mono)" font-size="8" fill="#D32F2F">5V echo</text>
+
+    <!-- R1 -->
+    <rect x="50" y="50" width="50" height="12" rx="2" fill="#A1887F" stroke="#5D4037" stroke-width="0.5" />
+    <text x="75" y="58" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#FFF">1 kΩ</text>
+
+    <!-- Junction -->
+    <line x1="100" y1="55" x2="140" y2="55" stroke="#FF7043" stroke-width="2" />
+    <circle cx="115" cy="55" r="3" fill="#FF7043" />
+    <text x="115" y="48" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#FF7043">3.3V</text>
+
+    <!-- To ESP32 -->
+    <line x1="140" y1="55" x2="220" y2="55" stroke="#FF7043" stroke-width="2" />
+    <text x="225" y="58" font-family="var(--font-mono)" font-size="8" fill="#FF7043">→ ESP32</text>
+
+    <!-- R2 to GND -->
+    <line x1="115" y1="55" x2="115" y2="70" stroke="#FF7043" stroke-width="2" />
+    <rect x="90" y="70" width="50" height="12" rx="2" fill="#A1887F" stroke="#5D4037" stroke-width="0.5" />
+    <text x="115" y="78" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="#FFF">2 kΩ</text>
+    <line x1="115" y1="82" x2="115" y2="92" stroke="#212121" stroke-width="2" />
+    <text x="120" y="94" font-family="var(--font-mono)" font-size="8" fill="#212121">GND</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- POWER WIRES (red = +V, black = GND) -->
+  <!-- ============================================================ -->
+
+  <!-- 12V from battery to L298N 12V input -->
+  <!-- Battery + (130, 1054) → exit down → run right → up to L298N 12V (787, 410) -->
+  <path d="M 130 1054 L 130 1090 L 850 1090 L 850 410" fill="none" stroke="#D32F2F" stroke-width="3" />
+  <rect x="430" y="1083" width="80" height="14" rx="3" fill="#FFFFFF" stroke="#D32F2F" stroke-width="0.6" />
+  <text x="470" y="1093" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="500"
+    fill="#D32F2F">+12V rail</text>
+
+  <!-- 12V branch to Buck IN+ (also from battery+) -->
+  <path d="M 130 1054 L 130 1000 L 370 1000 L 370 988" fill="none" stroke="#D32F2F" stroke-width="3" />
+
+  <!-- 5V from Buck OUT+ to ESP32 VIN -->
+  <!-- Buck OUT+ (570, 988) → up → left to ESP32 VIN (380, 84) -->
+  <path d="M 570 988 L 700 988 L 700 80 L 624 80 L 624 84" fill="none" stroke="#FF6B6B" stroke-width="2.5" />
+  <rect x="630" y="100" width="60" height="14" rx="3" fill="#FFFFFF" stroke="#FF6B6B" stroke-width="0.5" />
+  <text x="660" y="110" text-anchor="middle" font-family="var(--font-mono)" font-size="9" font-weight="500"
+    fill="#FF6B6B">5V → VIN</text>
+
+  <!-- 5V to Servo VCC -->
+  <path d="M 700 80 L 838 80 L 838 558" fill="none" stroke="#FF6B6B" stroke-width="2.5" stroke-dasharray="6 3" />
+  <text x="855" y="450" font-family="var(--font-mono)" font-size="9" fill="#FF6B6B">5V to servo</text>
+
+  <!-- 5V from L298N onboard regulator can also feed sensors (shown via dashed) -->
+  <!-- VCC for sensors: 5V rail from Buck → run along top -->
+  <path d="M 570 992 L 580 992 L 580 95 L 95 95 L 95 130" fill="none" stroke="#FF6B6B" stroke-width="1.8"
+    stroke-dasharray="6 3" />
+  <rect x="200" y="86" width="100" height="14" rx="3" fill="#FFFFFF" stroke="#FF6B6B" stroke-width="0.5" />
+  <text x="250" y="96" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="#FF6B6B">5V sensor
+    rail</text>
+  <!-- Branches to each sensor VCC -->
+  <line x1="95" y1="265" x2="95" y2="270" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" />
+  <line x1="95" y1="395" x2="95" y2="400" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" />
+  <line x1="95" y1="135" x2="95" y2="556" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" opacity="0" />
+  <!-- IR sensor VCCs -->
+  <path d="M 95 480 L 95 560 L 110 560" fill="none" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" />
+  <path d="M 95 560 L 95 655 L 110 655" fill="none" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" />
+  <path d="M 95 655 L 95 750 L 110 750" fill="none" stroke="#FF6B6B" stroke-width="1.8" stroke-dasharray="6 3" />
+
+  <!-- ============================================================ -->
+  <!-- GROUND BUS (THICK BLACK) — single common reference -->
+  <!-- ============================================================ -->
+
+  <!-- Main ground bus - horizontal trunk at y=1140 -->
+  <line x1="60" y1="1140" x2="940" y2="1140" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+  <text x="500" y="1133" text-anchor="middle" font-family="var(--font-mono)" font-size="11" font-weight="500"
+    fill="#000000">COMMON GROUND BUS</text>
+
+  <!-- Ground symbols at intervals -->
+  <g stroke="#000" stroke-width="1.5" fill="none">
+    <line x1="80" y1="1140" x2="80" y2="1148" />
+    <line x1="72" y1="1148" x2="88" y2="1148" />
+    <line x1="76" y1="1152" x2="84" y2="1152" />
+    <line x1="78" y1="1156" x2="82" y2="1156" />
+
+    <line x1="500" y1="1140" x2="500" y2="1148" />
+    <line x1="492" y1="1148" x2="508" y2="1148" />
+    <line x1="496" y1="1152" x2="504" y2="1152" />
+    <line x1="498" y1="1156" x2="502" y2="1156" />
+
+    <line x1="920" y1="1140" x2="920" y2="1148" />
+    <line x1="912" y1="1148" x2="928" y2="1148" />
+    <line x1="916" y1="1152" x2="924" y2="1152" />
+    <line x1="918" y1="1156" x2="922" y2="1156" />
+  </g>
+
+  <!-- GND drops from each device -->
+  <!-- Battery − -->
+  <line x1="210" y1="1054" x2="210" y2="1140" stroke="#000000" stroke-width="2.5" />
+  <text x="216" y="1100" font-family="var(--font-mono)" font-size="8" fill="#212121">Batt −</text>
+
+  <!-- Buck IN− (370, 1003) -->
+  <path d="M 370 1003 L 370 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="376" y="1100" font-family="var(--font-mono)" font-size="8" fill="#212121">Buck −</text>
+
+  <!-- Buck OUT− (576, 1003) -->
+  <path d="M 576 1003 L 576 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="582" y="1100" font-family="var(--font-mono)" font-size="8" fill="#212121">Buck out −</text>
+
+  <!-- L298N GND (817, 410) → down to bus -->
+  <path d="M 817 410 L 817 510 L 750 510 L 750 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="756" y="800" font-family="var(--font-mono)" font-size="8" fill="#212121">L298N GND</text>
+
+  <!-- ESP32 GND (left side, 380, 104) → down -->
+  <path d="M 370 104 L 365 104 L 365 870 L 410 870 L 410 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="416" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">ESP32 GND</text>
+
+  <!-- Front sensor GND -->
+  <path d="M 205 135 L 205 870 L 215 870 L 215 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+  <text x="220" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">US Front −</text>
+
+  <!-- Left sensor GND -->
+  <path d="M 205 265 L 240 265 L 240 870 L 250 870 L 250 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+  <text x="255" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">US Left −</text>
+
+  <!-- Right sensor GND -->
+  <path d="M 205 395 L 250 395 L 250 870 L 285 870 L 285 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+  <text x="290" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">US Right −</text>
+
+  <!-- IR1 GND -->
+  <path d="M 190 560 L 320 560 L 320 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+  <text x="326" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">IR1 −</text>
+
+  <!-- IR2 GND -->
+  <path d="M 190 655 L 350 655 L 350 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+  <text x="356" y="1080" font-family="var(--font-mono)" font-size="8" fill="#212121">IR2 −</text>
+
+  <!-- IR3 GND -->
+  <path d="M 190 750 L 380 750 L 380 1140" fill="none" stroke="#000000" stroke-width="1.5" />
+
+  <!-- Servo GND (860, 564) -->
+  <path d="M 860 564 L 860 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="866" y="800" font-family="var(--font-mono)" font-size="8" fill="#212121">Servo −</text>
+
+  <!-- Buzzer GND (885, 717) -->
+  <path d="M 885 720 L 885 1140" fill="none" stroke="#000000" stroke-width="2" />
+  <text x="891" y="900" font-family="var(--font-mono)" font-size="8" fill="#212121">Buzzer −</text>
+
+  <!-- Connection dots on bus -->
+  <g fill="#000">
+    <circle cx="210" cy="1140" r="3" />
+    <circle cx="215" cy="1140" r="3" />
+    <circle cx="250" cy="1140" r="3" />
+    <circle cx="285" cy="1140" r="3" />
+    <circle cx="320" cy="1140" r="3" />
+    <circle cx="350" cy="1140" r="3" />
+    <circle cx="370" cy="1140" r="3" />
+    <circle cx="380" cy="1140" r="3" />
+    <circle cx="410" cy="1140" r="3" />
+    <circle cx="576" cy="1140" r="3" />
+    <circle cx="750" cy="1140" r="3" />
+    <circle cx="860" cy="1140" r="3" />
+    <circle cx="885" cy="1140" r="3" />
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LEGEND -->
+  <!-- ============================================================ -->
+  <g transform="translate(40, 1200)">
+    <rect x="0" y="0" width="920" height="160" rx="8" fill="#FFFFFF" stroke="#D0CCC0" stroke-width="0.8" />
+    <text x="20" y="26" class="section-hdr">Wire color legend</text>
+    <line x1="20" y1="34" x2="200" y2="34" stroke="#D0CCC0" stroke-width="0.5" />
+
+    <!-- Column 1 -->
+    <line x1="20" y1="54" x2="55" y2="54" stroke="#1976D2" stroke-width="2.5" />
+    <text x="65" y="58" class="legend-txt">Ultrasonic TRIG (output)</text>
+
+    <line x1="20" y1="78" x2="55" y2="78" stroke="#F9A825" stroke-width="2.5" />
+    <text x="65" y="82" class="legend-txt">Ultrasonic ECHO (input)</text>
+
+    <line x1="20" y1="102" x2="55" y2="102" stroke="#E64A19" stroke-width="2.5" />
+    <text x="65" y="106" class="legend-txt">IR sensor signal</text>
+
+    <line x1="20" y1="126" x2="55" y2="126" stroke="#7B1FA2" stroke-width="2.5" />
+    <text x="65" y="130" class="legend-txt">Motor driver control (PWM/dir)</text>
+
+    <!-- Column 2 -->
+    <line x1="320" y1="54" x2="355" y2="54" stroke="#FB8C00" stroke-width="2.5" />
+    <text x="365" y="58" class="legend-txt">Servo PWM signal</text>
+
+    <line x1="320" y1="78" x2="355" y2="78" stroke="#AD1457" stroke-width="2.5" />
+    <text x="365" y="82" class="legend-txt">Buzzer signal</text>
+
+    <line x1="320" y1="102" x2="355" y2="102" stroke="#D32F2F" stroke-width="3" />
+    <text x="365" y="106" class="legend-txt">+12V power rail</text>
+
+    <line x1="320" y1="126" x2="355" y2="126" stroke="#FF6B6B" stroke-width="2.5" stroke-dasharray="6 3" />
+    <text x="365" y="130" class="legend-txt">+5V regulated rail</text>
+
+    <!-- Column 3 -->
+    <line x1="600" y1="54" x2="635" y2="54" stroke="#000000" stroke-width="3" />
+    <text x="645" y="58" class="legend-txt">Common GND bus (all returns)</text>
+
+    <g transform="translate(600, 75)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="1.5" />
+      <line x1="-6" y1="6" x2="6" y2="6" stroke="#000" stroke-width="1.5" />
+      <line x1="-4" y1="9" x2="4" y2="9" stroke="#000" stroke-width="1.5" />
+      <line x1="-2" y1="12" x2="2" y2="12" stroke="#000" stroke-width="1.5" />
+    </g>
+    <text x="615" y="82" class="legend-txt">Ground reference symbol</text>
+
+    <circle cx="617" cy="102" r="3" fill="#000" />
+    <text x="635" y="106" class="legend-txt">Wire junction (electrical connection)</text>
+
+    <text x="20" y="148" class="title-sub">Note: all components share a single common ground. The ESP32 is powered via a
+      12V→5V buck converter into VIN. The L298N receives 12V directly from the LiPo. HC-SR04 ECHO pins must use a
+      1kΩ/2kΩ voltage divider before reaching ESP32 GPIO.</text>
+  </g>
+</svg>
