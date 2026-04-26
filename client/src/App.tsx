@@ -1,71 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
-import useCustomWebSocket, { ReadyState } from './hooks/useCustomWebSocket';
 import { Activity, Radio, Cpu, Battery, Settings2, AlignCenter } from 'lucide-react';
 import Dashboard from './components/Dashboard.tsx';
 import ControlPanel from './components/ControlPanel.tsx';
 import EventLog from './components/EventLog.tsx';
 
-const WS_URL = 'ws://localhost:3000';
+// --- TELEMETRY DATA SOURCE ---
+// Uncomment the 'useRealTelemetry' import and comment 'useMockTelemetry' to use the real WebSocket backend.
+// import { useTelemetry } from './hooks/useMockTelemetry';
+import { useTelemetry } from './hooks/useRealTelemetry';
 
 function App() {
-  const [deviceStatus, setDeviceStatus] = useState<'online' | 'offline'>('offline');
-  const [telemetryData, setTelemetryData] = useState<any[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
-  
-  const { sendMessage, lastMessage, readyState } = useCustomWebSocket(WS_URL, {
-    shouldReconnect: () => true,
-    reconnectInterval: 3000,
-  });
-
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState] || 'Unknown';
-
-  useEffect(() => {
-    if (readyState === ReadyState.OPEN) {
-      sendMessage(JSON.stringify({ 
-        type: 'init-frontend', 
-        frontendId: `web-${Date.now()}`
-      }));
-    }
-  }, [readyState, sendMessage]);
-
-  useEffect(() => {
-    if (lastMessage !== null) {
-      try {
-        const msg = JSON.parse(lastMessage.data);
-        
-        if (msg.type === 'deviceStatus') {
-          setDeviceStatus(msg.data.status);
-        } else if (msg.type === 'telemetry') {
-          setTelemetryData(prev => {
-            const updated = [...prev, { ...msg.data, ts: new Date().toLocaleTimeString() }];
-            return updated.slice(-50); // Keep last 50
-          });
-        } else if (['obstacleDetected', 'wasteDetected', 'fault', 'conveyorActive', 'machineStarted', 'machineStopped'].includes(msg.type)) {
-          setEvents(prev => [{ ...msg, id: Date.now() }, ...prev].slice(0, 20));
-        }
-      } catch (e) {
-        console.error("Failed to parse msg:", e);
-      }
-    }
-  }, [lastMessage]);
-
-  const sendCommand = useCallback((type: string, data: any) => {
-    if (readyState === ReadyState.OPEN) {
-      sendMessage(JSON.stringify({
-        type,
-        source: 'frontend',
-        deviceId: 'esp32-01', // hardcoded for now
-        msgId: `msg-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        data
-      }));
-    }
-  }, [readyState, sendMessage]);
+  const {
+    deviceStatus,
+    telemetryData,
+    events,
+    connectionStatus,
+    readyState,
+    sendCommand,
+    isMock
+  } = useTelemetry();
 
   const currentTelemetry = telemetryData.length > 0 ? telemetryData[telemetryData.length - 1] : null;
 
@@ -78,13 +30,18 @@ function App() {
           </div>
           <div>
             <h1 className="text-xl font-bold font-heading">AquaBot Dashboard</h1>
-            <p className="text-sm text-muted-foreground">IIoT Floating Waste Collector</p>
+            <p className="text-sm text-muted-foreground flex items-center gap-2">
+              IIoT Floating Waste Collector
+              {isMock && (
+                <span className="bg-amber-500/20 text-amber-500 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded">Mock Data</span>
+              )}
+            </p>
           </div>
         </div>
         
         <div className="flex gap-4">
           <div className="flex items-center gap-2 bg-muted/50 px-3 py-1.5 rounded-full text-sm font-medium">
-            <Radio className={`w-4 h-4 ${readyState === ReadyState.OPEN ? 'text-green-500' : 'text-red-500'}`} />
+            <Radio className={`w-4 h-4 ${readyState === 1 ? 'text-green-500' : 'text-red-500'}`} />
             Server: {connectionStatus}
           </div>
           <div className="flex items-center gap-2 bg-muted/50 px-3 py-1.5 rounded-full text-sm font-medium">
